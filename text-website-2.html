@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Morgan | Video Editor & Storyteller</title>
+  
+  <!-- Google Fonts: Outfit (Headings) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CSS Variables & Global Reset
+       ========================================================================== */
+    :root {
+      --bg-main: #090a10;
+      --bg-secondary: #0f111a;
+      --bg-card: #141724;
+      --bg-card-hover: #1b2033;
+      --bg-nav: rgba(9, 10, 16, 0.88);
+      
+      --accent: #00d2ff;
+      --accent-hover: #33ddff;
+      --accent-glow: rgba(0, 210, 255, 0.35);
+      --accent-gradient: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(0, 210, 255, 0.45);
+      
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    button, input, textarea {
+      font-family: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 6.5rem 0;
+      position: relative;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      outline: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 210, 255, 0.55);
+      color: #000;
+    }
+
+    /* ==========================================================================
+       1. Sticky Navbar
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--bg-nav);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4.5rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0.5rem;
+      z-index: 1100;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ==========================================================================
+       2. Hero Section
+       ========================================================================== */
+    .hero {
+      min-height: calc(100vh - 4.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 5rem 0;
+      background: radial-gradient(circle at 50% 30%, rgba(0, 210, 255, 0.12) 0%, transparent 65%);
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-intro {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ==========================================================================
+       3. About Section
+       ========================================================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+      max-width: 380px;
+      margin: 0 auto;
+      padding-bottom: 25px; /* space for badge */
+    }
+
+    .about-photo-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .about-photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, var(--accent-glow), transparent 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .avatar-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .experience-badge {
+      position: absolute;
+      bottom: 5px;
+      right: -10px;
+      background: #111422;
+      border: 1px solid var(--border-accent);
+      padding: 0.85rem 1.4rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.15);
+      z-index: 10;
+    }
+
+    .experience-num {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+
+    .experience-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text-main);
+    }
+
+    .about-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .about-bio {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .skills-heading {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      list-style: none;
+    }
+
+    .skill-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .skill-chip span.dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .skill-chip:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 210, 255, 0.15);
+    }
+
+    /* ==========================================================================
+       4. Portfolio Grid & Video Modal
+       ========================================================================== */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-accent);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 210, 255, 0.15);
+    }
+
+    .project-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .project-thumb svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover .project-thumb svg {
+      transform: scale(1.05);
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(9, 10, 16, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .play-overlay {
+      opacity: 1;
+    }
+
+    .play-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px var(--accent);
+      transform: scale(0.85);
+      transition: var(--transition);
+    }
+
+    .project-card:hover .play-icon {
+      transform: scale(1);
+    }
+
+    .play-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: #000;
+      margin-left: 3px;
+    }
+
+    .project-info {
+      padding: 1.5rem;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Modal Styling */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-window {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 860px;
+      position: relative;
+      overflow: hidden;
+      transform: scale(0.92);
+      transition: transform 0.3s ease;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-backdrop.open .modal-window {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .modal-video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #000;
+    }
+
+    .modal-video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ==========================================================================
+       5. Services Section
+       ========================================================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.25rem 1.75rem;
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+
+    .service-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .service-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       6. Testimonials Slider
+       ========================================================================== */
+    .testimonials-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .slider-track {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+    }
+
+    .testimonial-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(30px);
+      transition: all 0.4s ease;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      border-radius: var(--radius-md);
+    }
+
+    .testimonial-slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      position: relative;
+    }
+
+    .quote-icon {
+      color: var(--accent);
+      opacity: 0.4;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-text {
+      font-size: 1.15rem;
+      color: var(--text-main);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--bg-secondary);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .author-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .author-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .slider-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .slider-btn:hover {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dot-btn {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dot-btn.active {
+      background: var(--accent);
+      width: 26px;
+      border-radius: var(--radius-full);
+    }
+
+    /* ==========================================================================
+       7. Contact Section
+       ========================================================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: flex-start;
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .contact-info p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-icon-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    .social-icon-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px var(--accent-glow);
+    }
+
+    .social-icon-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2.25rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-status {
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      display: none;
+    }
+
+    .form-status.success {
+      display: block;
+      color: #10b981;
+    }
+
+    /* ==========================================================================
+       8. Footer
+       ========================================================================== */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      text-align: center;
+      background: var(--bg-secondary);
+      color: var(--text-subtle);
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       Responsive Media Queries
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .about-grid, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .about-image-wrap {
+        max-width: 320px;
+      }
+      .experience-badge {
+        right: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 4.5rem;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 4.5rem);
+        background: var(--bg-main);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2.5rem;
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+        border-top: 1px solid var(--border);
+      }
+
+      .nav-menu.open {
+        transform: translateX(0);
+      }
+
+      .nav-link {
+        font-size: 1.25rem;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .testimonial-slide {
+        padding: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="nav-logo">
+        ALEX<span>.EDIT</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#work" class="nav-link">Work</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 2. Hero Section -->
+  <header class="section hero" id="hero">
+    <div class="container hero-content">
+      <h1 class="hero-name">Alex Morgan</h1>
+      <p class="hero-tagline">Video Editor & Storyteller</p>
+      <p class="hero-intro">
+        Transforming raw footage into compelling visual experiences with surgical precision, rhythm, and cinematic emotion.
+      </p>
+      <a href="#work" class="btn btn-primary">
+        View My Work
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 3. About Section -->
+  <section class="section" id="about" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">About Me</span>
+        <h2 class="section-title">Behind the Timeline</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-image-wrap">
+          <div class="about-photo-frame">
+            <!-- Profile Photo Placeholder Graphic -->
+            <svg class="avatar-svg" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="500" fill="#141724"/>
+              <circle cx="200" cy="180" r="80" fill="#1b2033" stroke="#00d2ff" stroke-width="2"/>
+              <path d="M80 430C80 340 130 300 200 300C270 300 320 340 320 430" fill="#1b2033" stroke="#00d2ff" stroke-width="2"/>
+              <circle cx="200" cy="170" r="35" fill="#00d2ff" opacity="0.3"/>
+            </svg>
+          </div>
+          <!-- Badge rendered cleanly outside frame to prevent clipping -->
+          <div class="experience-badge">
+            <div class="experience-num">7+</div>
+            <div class="experience-label">Years of<br>Experience</div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <h3>Crafting Narrative Arc with Rhythm & Vision</h3>
+          <p class="about-bio">
+            I am a lead video editor specializing in commercial post-production, brand films, and high-retention social formats. With a deep intuition for pacing and visual tone, I collaborate with directors, agencies, and content creators to turn concepts into memorable viewer experiences.
+          </p>
+
+          <div class="skills-heading">Core Toolset & Skills</div>
+          <ul class="skills-list">
+            <li class="skill-chip"><span class="dot"></span> Premiere Pro</li>
+            <li class="skill-chip"><span class="dot"></span> After Effects</li>
+            <li class="skill-chip"><span class="dot"></span> DaVinci Resolve</li>
+            <li class="skill-chip"><span class="dot"></span> Final Cut Pro</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Portfolio Grid Section -->
+  <section class="section" id="work">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Portfolio</span>
+        <h2 class="section-title">Selected Projects</h2>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- Project 1 -->
+        <article class="project-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <div class="project-thumb">
+            <svg viewBox="0 0 600 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="338" fill="#121629"/>
+              <circle cx="300" cy="169" r="90" fill="#00d2ff" opacity="0.15"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="24" font-weight="700">Commercial Spec</text>
+            </svg>
+            <div class="play-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tag">Commercial</div>
+            <h3 class="project-title">Cybernetic Peak — Brand Film</h3>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <div class="project-thumb">
+            <svg viewBox="0 0 600 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="338" fill="#181528"/>
+              <circle cx="300" cy="169" r="90" fill="#a855f7" opacity="0.15"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="24" font-weight="700">Music Video</text>
+            </svg>
+            <div class="play-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tag">Music Video</div>
+            <h3 class="project-title">Echoes in Neon — Official Video</h3>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <div class="project-thumb">
+            <svg viewBox="0 0 600 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="338" fill="#152125"/>
+              <circle cx="300" cy="169" r="90" fill="#00d2ff" opacity="0.2"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="24" font-weight="700">Documentary Short</text>
+            </svg>
+            <div class="play-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tag">Documentary</div>
+            <h3 class="project-title">Art of the Craft — Mini Doc</h3>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <div class="project-thumb">
+            <svg viewBox="0 0 600 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="338" fill="#20171a"/>
+              <circle cx="300" cy="169" r="90" fill="#f43f5e" opacity="0.15"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="24" font-weight="700">YouTube Showcase</text>
+            </svg>
+            <div class="play-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tag">YouTube Content</div>
+            <h3 class="project-title">Expedition North — 1M+ Views</h3>
+          </div>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <div class="project-thumb">
+            <svg viewBox="0 0 600 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="338" fill="#141a29"/>
+              <circle cx="300" cy="169" r="90" fill="#00d2ff" opacity="0.2"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="24" font-weight="700">Motion Graphics</text>
+            </svg>
+            <div class="play-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tag">Motion Reel</div>
+            <h3 class="project-title">HyperDrive — Title Sequence</h3>
+          </div>
+        </article>
+
+        <!-- Project 6 -->
+        <article class="project-card" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+          <div class="project-thumb">
+            <svg viewBox="0 0 600 338" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="600" height="338" fill="#1a1c22"/>
+              <circle cx="300" cy="169" r="90" fill="#eab308" opacity="0.15"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="24" font-weight="700">Narrative Short</text>
+            </svg>
+            <div class="play-overlay">
+              <div class="play-icon">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tag">Narrative Film</div>
+            <h3 class="project-title">Shadows in the Mist — Short Film</h3>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div class="modal-backdrop" id="video-modal" aria-hidden="true" role="dialog">
+    <div class="modal-window">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-video-container">
+        <iframe id="modal-iframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Services Section -->
+  <section class="section" id="services" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Services</span>
+        <h2 class="section-title">What I Bring to the Table</h2>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"></polygon>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+          </div>
+          <h3 class="service-title">Video Editing</h3>
+          <p class="service-desc">Complete narrative structuring, multi-cam assembly, pacing optimization, and sound synchronization.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a7 7 0 0 0 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"></path>
+            </svg>
+          </div>
+          <h3 class="service-title">Color Grading</h3>
+          <p class="service-desc">Shot matching, skin tone balance, and cinematic creative look creation using DaVinci Resolve.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <h3 class="service-title">Motion Graphics</h3>
+          <p class="service-desc">Custom lower thirds, dynamic title animations, kinetic typography, and seamless visual transitions.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+            </svg>
+          </div>
+          <h3 class="service-title">YouTube Content Editing</h3>
+          <p class="service-desc">High-retention storytelling, fast-paced rhythm, sound design, and engaging visual hooks for channel growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Testimonials Section -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Endorsements</span>
+        <h2 class="section-title">Client Feedback</h2>
+      </div>
+
+      <div class="testimonials-wrapper">
+        <div class="slider-track" id="slider-track">
+          <!-- Slide 1 -->
+          <div class="testimonial-slide active">
+            <div class="quote-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
+            </div>
+            <p class="testimonial-text">
+              "Alex transformed our scattered footage into a high-octane commercial that exceeded our client's expectations. His sense of pacing and sound design is phenomenal."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-photo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#00d2ff"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              </div>
+              <div>
+                <div class="author-name">Sarah Jenkins</div>
+                <div class="author-role">Creative Director, Apex Media</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="testimonial-slide">
+            <div class="quote-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
+            </div>
+            <p class="testimonial-text">
+              "Our average YouTube watch time increased by 40% after Alex took over post-production. He understands audience retention and always delivers ahead of deadline."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-photo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#00d2ff"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              </div>
+              <div>
+                <div class="author-name">Marcus Vance</div>
+                <div class="author-role">Content Creator (1.2M Subs)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="testimonial-slide">
+            <div class="quote-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+              </svg>
+            </div>
+            <p class="testimonial-text">
+              "The color grading and seamless narrative cuts Alex brought to our indie documentary gave it a festival-ready, cinematic sheen. Truly a collaborative powerhouse."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-photo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#00d2ff"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              </div>
+              <div>
+                <div class="author-name">Elena Rostova</div>
+                <div class="author-role">Independent Film Director</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-controls">
+          <button class="slider-btn" id="prev-slide" aria-label="Previous Testimonial">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="slider-dots" id="slider-dots">
+            <button class="dot-btn active" data-index="0" aria-label="Slide 1"></button>
+            <button class="dot-btn" data-index="1" aria-label="Slide 2"></button>
+            <button class="dot-btn" data-index="2" aria-label="Slide 3"></button>
+          </div>
+          <button class="slider-btn" id="next-slide" aria-label="Next Testimonial">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Contact Section -->
+  <section class="section" id="contact" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Let's Connect</span>
+        <h2 class="section-title">Start a Project</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Ready to elevate your visual content?</h3>
+          <p>
+            Whether you have a commercial campaign, a narrative project, or want to take your channel's retention to the next level, let's talk about how we can collaborate.
+          </p>
+
+          <div class="skills-heading">Follow My Work</div>
+          <div class="social-links">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </a>
+
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" fill="none" stroke="currentColor" stroke-width="2"/>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/>
+              </svg>
+            </a>
+
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" fill="none" stroke="currentColor" stroke-width="2"/>
+                <rect x="2" y="9" width="4" height="12" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="4" cy="4" r="2" fill="currentColor"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contact-form">
+          <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Your Name" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="name@domain.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea id="message" name="message" class="form-textarea" placeholder="Tell me about your project scope, timeline, and goals..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Send Message
+          </button>
+          <div class="form-status" id="form-status">Message sent successfully! I'll get back to you within 24 hours.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Alex Morgan. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* Mobile Menu Toggle */
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('nav-menu');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('open');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('open');
+        });
+      });
+
+      /* Video Modal */
+      const modal = document.getElementById('video-modal');
+      const modalIframe = document.getElementById('modal-iframe');
+      const modalClose = document.getElementById('modal-close');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const videoSrc = card.getAttribute('data-video');
+          if (videoSrc) {
+            modalIframe.src = videoSrc;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      });
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        modalIframe.src = '';
+        document.body.style.overflow = '';
+      }
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      /* Testimonial Slider */
+      const slides = document.querySelectorAll('.testimonial-slide');
+      const dots = document.querySelectorAll('.dot-btn');
+      const prevBtn = document.getElementById('prev-slide');
+      const nextBtn = document.getElementById('next-slide');
+      let currentSlide = 0;
+      const totalSlides = slides.length;
+
+      function goToSlide(index) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+
+        currentSlide = (index + totalSlides) % totalSlides;
+
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+      }
+
+      nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+      prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const slideIndex = parseInt(dot.getAttribute('data-index'), 10);
+          goToSlide(slideIndex);
+        });
+      });
+
+      let sliderInterval = setInterval(() => goToSlide(currentSlide + 1), 6000);
+      const sliderWrapper = document.querySelector('.testimonials-wrapper');
+      sliderWrapper.addEventListener('mouseenter', () => clearInterval(sliderInterval));
+      sliderWrapper.addEventListener('mouseleave', () => {
+        sliderInterval = setInterval(() => goToSlide(currentSlide + 1), 6000);
+      });
+
+      /* Contact Form Feedback */
+      const contactForm = document.getElementById('contact-form');
+      const formStatus = document.getElementById('form-status');
+
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        formStatus.classList.add('success');
+        contactForm.reset();
+        setTimeout(() => {
+          formStatus.classList.remove('success');
+        }, 5000);
+      });
+    });
+  </script>
+</body>
+</html>
